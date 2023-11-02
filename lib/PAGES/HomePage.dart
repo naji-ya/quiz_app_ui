@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:quiz_app_ui/PAGES/questions.dart';
+import 'package:quiz_app_ui/questionBank.dart';
 
 import 'package:quiz_app_ui/theme/style.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
+
+QuestionBank questionBank = QuestionBank();
 
 class HomePage extends StatefulWidget {
   void Function()? onTap;
@@ -35,16 +37,7 @@ class _HomePageState extends State<HomePage> {
   //   false,
   //   false,
   // ];
-  List<Questions> quizHome = [
-    Questions(q: " A cheetah is the fastest animal on the planet", a: false),
-    Questions(
-        q: "Pigs roll in the mud because it helps to keep them cool.", a: true),
-    Questions(q: "An octopus has one heart", a: false),
-    Questions(q: "  Sloths take two weeks to digest food.", a: true),
-    Questions(q: "Bats are blind", a: false),
-    Questions(
-        q: "Lions are more likely to hunt down a human than a tiger", a: false)
-  ];
+
   int questionNumber = 0;
 
   @override
@@ -65,7 +58,7 @@ class _HomePageState extends State<HomePage> {
             padding: const EdgeInsets.all(10.0),
             child: Container(
               child: Text(
-                quizHome[questionNumber].questionText,
+                questionBank.quizHome[questionNumber].questionText,
                 style: GoogleFonts.dmSerifDisplay(
                     fontSize: 25,
                     wordSpacing: 2,
@@ -93,7 +86,8 @@ class _HomePageState extends State<HomePage> {
                 ),
                 child: GestureDetector(
                   onTap: () {
-                    bool correctAnswer = quizHome[questionNumber].answerText;
+                    bool correctAnswer =
+                        questionBank.quizHome[questionNumber].answerText;
                     setState(() {
                       if (correctAnswer == true) {
                         Alert(
@@ -143,7 +137,8 @@ class _HomePageState extends State<HomePage> {
                 ),
                 child: GestureDetector(
                   onTap: () {
-                    bool correctAnswer = quizHome[questionNumber].answerText;
+                    bool correctAnswer =
+                        questionBank.quizHome[questionNumber].answerText;
                     setState(() {
                       if (correctAnswer == false) {
                         Alert(
