@@ -38,8 +38,6 @@ class _HomePageState extends State<HomePage> {
   //   false,
   // ];
 
-  int questionNumber = 0;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,16 +47,17 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: appbarColor,
         elevation: 0,
         shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(30.0),
-          bottomRight: Radius.circular(30.0),
-        )),
+          borderRadius: BorderRadius.only(
+            bottomLeft: Radius.circular(30.0),
+            bottomRight: Radius.circular(30.0),
+          ),
+        ),
         flexibleSpace: Center(
           child: Padding(
             padding: const EdgeInsets.all(10.0),
             child: Container(
               child: Text(
-                questionBank.quizHome[questionNumber].questionText,
+                questionBank.getQuestionText(),
                 style: GoogleFonts.dmSerifDisplay(
                     fontSize: 25,
                     wordSpacing: 2,
@@ -86,8 +85,7 @@ class _HomePageState extends State<HomePage> {
                 ),
                 child: GestureDetector(
                   onTap: () {
-                    bool correctAnswer =
-                        questionBank.quizHome[questionNumber].answerText;
+                    bool correctAnswer = questionBank.getAnswerText();
                     setState(() {
                       if (correctAnswer == true) {
                         Alert(
@@ -110,7 +108,7 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ).show();
                       }
-                      questionNumber++;
+                      questionBank.nextQuestion();
                     });
                   },
                   child: Center(
@@ -137,8 +135,7 @@ class _HomePageState extends State<HomePage> {
                 ),
                 child: GestureDetector(
                   onTap: () {
-                    bool correctAnswer =
-                        questionBank.quizHome[questionNumber].answerText;
+                    bool correctAnswer = questionBank.getAnswerText();
                     setState(() {
                       if (correctAnswer == false) {
                         Alert(
@@ -160,7 +157,7 @@ class _HomePageState extends State<HomePage> {
                               size: 45,
                             )).show();
                       }
-                      questionNumber++;
+                      questionBank.nextQuestion();
                     });
                   },
                   child: Center(
