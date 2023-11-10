@@ -5,6 +5,8 @@ import 'package:quiz_app_ui/questionBank.dart';
 import 'package:quiz_app_ui/theme/style.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
+
+// object created for the class QuestionBank
 QuestionBank questionBank = QuestionBank();
 
 class HomePage extends StatefulWidget {
@@ -20,6 +22,45 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+
+  //function to check whether correct answers and user selected answers are equal
+  void checkAnswer(bool userSelectedAnswer) {
+    bool correctAnswer = questionBank.getAnswerText();
+
+    setState(() {
+      // condition to check the quiz is finished or not 
+      if (questionBank.isFinished() == true) {
+        Alert(
+          context: context,
+          title: 'You are successfully completed the quiz',
+        ).show();
+
+        questionBank.reset();
+      } else {
+        if (userSelectedAnswer == correctAnswer) {
+          Alert(
+            context: context,
+            title: "You are right",
+            content: const Icon(
+              Icons.done,
+              color: Colors.green,
+              size: 45,
+            ),
+          ).show();
+        } else {
+          Alert(
+              context: context,
+              title: "You are wrong",
+              content: const Icon(
+                Icons.close,
+                color: Colors.red,
+                size: 45,
+              )).show();
+        }
+        questionBank.nextQuestion();
+      }
+    });
+  }
   // List<String> question = [
   //   " A cheetah is the fastest animal on the planet",
   //   "Pigs roll in the mud because it helps to keep them cool.",
@@ -55,6 +96,8 @@ class _HomePageState extends State<HomePage> {
         flexibleSpace: Center(
           child: Padding(
             padding: const EdgeInsets.all(10.0),
+
+            //to display questions
             child: Container(
               child: Text(
                 questionBank.getQuestionText(),
@@ -76,6 +119,7 @@ class _HomePageState extends State<HomePage> {
             Padding(
               padding:
                   const EdgeInsets.only(top: 12.0, right: 12.0, left: 12.0),
+                  // button for true
               child: Container(
                 height: 80,
                 width: 400,
@@ -85,33 +129,10 @@ class _HomePageState extends State<HomePage> {
                 ),
                 child: GestureDetector(
                   onTap: () {
-                    bool correctAnswer = questionBank.getAnswerText();
-                    setState(() {
-                      if (correctAnswer == true) {
-                        Alert(
-                          context: context,
-                          title: "You are right",
-                          content: const Icon(
-                            Icons.done,
-                            color: Colors.green,
-                            size: 45,
-                          ),
-                        ).show();
-                      } else {
-                        Alert(
-                          context: context,
-                          title: "You are wrong",
-                          content: const Icon(
-                            Icons.close,
-                            color: Colors.red,
-                            size: 45,
-                          ),
-                        ).show();
-                      }
-                      questionBank.nextQuestion();
-                    });
+                    checkAnswer(true);
                   },
                   child: Center(
+
                       child: Text(
                     "True",
                     style: GoogleFonts.dmSerifDisplay(
@@ -126,6 +147,7 @@ class _HomePageState extends State<HomePage> {
             Padding(
               padding:
                   const EdgeInsets.only(top: 12.0, right: 12.0, left: 12.0),
+                  // button for false
               child: Container(
                 height: 80,
                 width: 400,
@@ -135,30 +157,7 @@ class _HomePageState extends State<HomePage> {
                 ),
                 child: GestureDetector(
                   onTap: () {
-                    bool correctAnswer = questionBank.getAnswerText();
-                    setState(() {
-                      if (correctAnswer == false) {
-                        Alert(
-                          context: context,
-                          title: "You are right",
-                          content: const Icon(
-                            Icons.done,
-                            color: Colors.green,
-                            size: 45,
-                          ),
-                        ).show();
-                      } else {
-                        Alert(
-                            context: context,
-                            title: "You are wrong",
-                            content: const Icon(
-                              Icons.close,
-                              color: Colors.red,
-                              size: 45,
-                            )).show();
-                      }
-                      questionBank.nextQuestion();
-                    });
+                    checkAnswer(false);
                   },
                   child: Center(
                       child: Text(
